@@ -17,6 +17,7 @@ Ubuntu Commands and Troubleshooting Solutions by Sammy Barasa. A comprehensive g
 # Posts
 <details>
 <summary>
+
 ## **attempt to read or write outside hd0 error**
 </summary>
 
@@ -55,6 +56,11 @@ On start up ubuntu will default to checking for the bootfile in the set  partiti
 [sources](https://askubuntu.com/questions/397485/what-to-do-when-i-get-an-attempt-to-read-or-write-outside-of-disk-hd0-error)
 </details>
 
+<details>
+<summary>
+
+## **mount: /mount/path: wrong fs type, bad option, bad superblock on /dev/sda3, missing codepage or helper program, or other error**
+</summary>
 
 ## **mount: /mount/path: wrong fs type, bad option, bad superblock on /dev/sda3, missing codepage or helper program, or other error**
 
@@ -119,3 +125,4 @@ change the device name and path in your scenario. Ensure you use the root user w
 [sources](https://www.reddit.com/r/linux4noobs/comments/17gk04t/wrong_fs_type_bad_option_bad_superblock_on/)
 
 [See Article Here](https://dev.to/sammybarasa/mount-mountpath-wrong-fs-type-bad-option-bad-superblock-on-devsda3-missing-codepage-or-helper-program-or-other-error-2l84)
+</details>
