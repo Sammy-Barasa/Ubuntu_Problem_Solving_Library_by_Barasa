@@ -16,7 +16,6 @@ Ubuntu Commands and Troubleshooting Solutions by Sammy Barasa. A comprehensive g
 
 # Posts
 
-
 ## **attempt to read or write outside hd0 error**
 
 ### Ubuntu does not find partition with boot file on start up.
@@ -50,3 +49,65 @@ grub rescue > normal
 On start up ubuntu will default to checking for the bootfile in the set  partition
 
 [sources](https://askubuntu.com/questions/397485/what-to-do-when-i-get-an-attempt-to-read-or-write-outside-of-disk-hd0-error)
+
+## **mount: /mount/path: wrong fs type, bad option, bad superblock on /dev/sda3, missing codepage or helper program, or other error**
+
+### Background
+
+Upon upgrading from Ubuntu 23.01 to Ubuntu 23.10, I encountered a strange error when the Ubuntu desktop GUI file explorer Icon was active and I rushed to check my three partitions. The error read "wrong fs type, bad option, bad superblock on /dev/sda3, missing codepage or helper program, or other error". You can imagine how terrified I was!
+
+
+### Problem: mount path error
+
+![mount: /mount/path: wrong fs type, bad option, bad superblock on /dev/sda3, missing codepage or helper program, or other error](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/m2x7roajiun3ginsea1s.png)
+
+***Research ***   
+
+Listing all the block devices showed two device partitions with no mount path with the following command:
+
+```sh
+lsblk
+```
+
+![Listing all the block devices](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/zkktbhzlic29iughmw97.png)
+navigating to the media folder to check the available directories, the two media paths were missing
+
+```zsh
+kesa@KESA-DESKTOP:/$ cd media/
+kesa@KESA-DESKTOP:/media$ ls
+kesa
+kesa@KESA-DESKTOP:/media$ cd kesa/
+kesa@KESA-DESKTOP:/media/kesa$ ls
+XYZ
+```
+
+### Solution: device fail to mount, mount manually
+
+Manually mount the device or partition. Create mount paths with the label of the partition that can be found using `lsblk -f`
+
+![list block devices towith -f flag to see device labels](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/jc0essktos9r5uaq7wwa.png)
+
+In my case:
+```sh
+kesa@KESA-DESKTOP:/media/kesa$ sudo mkdir WORKSPACE
+```
+mount the device partition using the mount command to the newly created mount path
+```sh
+kesa@KESA-DESKTOP:/media/kesa$ sudo mount /dev/sda3 /media/kesa/WORKSPACE
+```
+
+![mount device command](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/2z8o98psfxmmpsam7nmk.png)
+```sh
+kesa@KESA-DESKTOP:/media/kesa$ sudo mount /dev/sda1 /media/kesa/New\ Volume
+```
+
+change the device name and path in your scenario. Ensure you use the root user when you encounter permission issues. Check final block devices with the list block command.
+
+
+![manual mount successful](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/v9lv0x8cj8vr739sjv2h.png)
+
+
+
+[sources](https://discuss.devopscube.com/t/solved-wrong-fs-type-bad-option-bad-superblock-on-dev-sdb-error/206/4)
+
+[sources](https://www.reddit.com/r/linux4noobs/comments/17gk04t/wrong_fs_type_bad_option_bad_superblock_on/)
