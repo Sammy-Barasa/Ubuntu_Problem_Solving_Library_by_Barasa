@@ -15,6 +15,10 @@ Ubuntu Commands and Troubleshooting Solutions by Sammy Barasa. A comprehensive g
 ```
 
 # Posts
+<details>
+<summary>
+## **attempt to read or write outside hd0 error**
+</summary>
 
 ## **attempt to read or write outside hd0 error**
 
@@ -49,6 +53,8 @@ grub rescue > normal
 On start up ubuntu will default to checking for the bootfile in the set  partition
 
 [sources](https://askubuntu.com/questions/397485/what-to-do-when-i-get-an-attempt-to-read-or-write-outside-of-disk-hd0-error)
+</details>
+
 
 ## **mount: /mount/path: wrong fs type, bad option, bad superblock on /dev/sda3, missing codepage or helper program, or other error**
 
