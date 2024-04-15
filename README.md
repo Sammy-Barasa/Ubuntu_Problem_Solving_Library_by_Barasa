@@ -111,3 +111,5 @@ change the device name and path in your scenario. Ensure you use the root user w
 [sources](https://discuss.devopscube.com/t/solved-wrong-fs-type-bad-option-bad-superblock-on-dev-sdb-error/206/4)
 
 [sources](https://www.reddit.com/r/linux4noobs/comments/17gk04t/wrong_fs_type_bad_option_bad_superblock_on/)
+
+[See Article Here](https://dev.to/sammybarasa/mount-mountpath-wrong-fs-type-bad-option-bad-superblock-on-devsda3-missing-codepage-or-helper-program-or-other-error-2l84)
