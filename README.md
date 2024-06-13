@@ -127,6 +127,11 @@ change the device name and path in your scenario. Ensure you use the root user w
 [See Article Here](https://dev.to/sammybarasa/mount-mountpath-wrong-fs-type-bad-option-bad-superblock-on-devsda3-missing-codepage-or-helper-program-or-other-error-2l84)
 </details>
 
+<details>
+<summary>
+
+## **How to restore Ubuntu desktop UI After an Unexpected tty1 Boot without initial internet access**
+</summary>
 ## How to restore Ubuntu desktop UI After an Unexpected tty1 Boot without initial internet access
 ### introduction
 My Ubuntu 24.04 desktop unexpectedly boot into tty1 presenting a shell interface to interact with on bootup.
@@ -235,3 +240,5 @@ Thank you. Hope this helps you recover your Ubuntu desktop when the internet con
 3. <a id="my-link2" href="https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line">Wireless connection by editing `/etc/netplan/`</a>
 
 4. [Restoring the Ubuntu UI After an Unexpected tty1 Boot](https://medium.com/@elysiumceleste/restoring-the-ubuntu-ui-after-an-unexpected-tty1-boot-9f1042e03139)
+
+</details>
