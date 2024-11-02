@@ -242,3 +242,78 @@ Thank you. Hope this helps you recover your Ubuntu desktop when the internet con
 4. [Restoring the Ubuntu UI After an Unexpected tty1 Boot](https://medium.com/@elysiumceleste/restoring-the-ubuntu-ui-after-an-unexpected-tty1-boot-9f1042e03139)
 
 </details>
+
+<details>
+<summary>
+
+## **FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory on Digital OceanDroplet**
+</summary>
+## Introduction
+A memory Heap error occurred on Digital ocean droplet while trying to build a react app during deployment. I do development primarily in Django and front end using ReactJs. During deployment, I have to do the final build for React to produce a compiled static file that can be served by Django. The memory error occurred during the build when running `yarn build`
+
+```sh
+<--- Last few GCs --->
+
+[139947:0x6613440]    32615 ms: Mark-Compact 244.4 (258.4) -> 243.5 (258.6) MB, 858.51 / 0.00 ms  (average mu = 0.116, current mu = 0.034) allocation failure; scavenge might not succeed
+[139947:0x6613440]    33392 ms: Mark-Compact 244.6 (258.6) -> 243.7 (258.9) MB, 711.03 / 0.00 ms  (average mu = 0.101, current mu = 0.085) allocation failure; scavenge might not succeed
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 0xb86ecf node::OOMErrorHandler(char const*, v8::OOMDetails const&) [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+ 2: 0xef74d0 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+ 3: 0xef77b7 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+ 4: 0x1109355  [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+ 5: 0x11098e4 v8::internal::Heap::RecomputeLimits(v8::internal::GarbageCollector) [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+ 6: 0x11207d4 v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::internal::GarbageCollectionReason, char const*) [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+ 7: 0x1120fec v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+ 8: 0x10f72f1 v8::internal::HeapAllocator::AllocateRawWithLightRetrySlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+ 9: 0x10f8485 v8::internal::HeapAllocator::AllocateRawWithRetryOrFailSlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+10: 0x10d5ad6 v8::internal::Factory::NewFillerObject(int, v8::internal::AllocationAlignment, v8::internal::AllocationType, v8::internal::AllocationOrigin) [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+11: 0x1531906 v8::internal::Runtime_AllocateInYoungGeneration(int, unsigned long*, v8::internal::Isolate*) [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+12: 0x196aef6  [/home/aislackbot/.nvm/versions/node/v20.17.0/bin/node]
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+```
+Build error
+```sh
+
+Creating an optimized production build...
+The build failed because the process exited too early. This probably means the system ran out of memory or someone called kill -9 on the process.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+yarn run v1.22.22
+$ react-scripts build
+Creating an optimized production build...
+The build failed because the process exited too early. This probably means the system ran out of memory or someone called kill -9 on the process.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+```
+## Resolution
+The above error is as a result of the Node.js installation having the heap memory restricted. While executing the build process, this heap memory restriction is exceeded.   
+
+Thankfully this value can be adjusted through `NODE_OPTIONS` and be exported to the linux system where Node.js is installed.
+
+In my case I adjusted the value to `4096` with the following command:
+```sh
+export NODE_OPTIONS="--max-old-space-size=4096"
+```
+Running `yarn build` then works afterwords
+```sh
+export NODE_OPTIONS="--max-old-space-size=4096"
+yarn build
+```   
+
+`--max-old-space-size` Sets the max memory size of V8's old memory section. According to NodeJs documentation:   
+``` 
+As memory consumption approaches the limit, V8 will spend more time on garbage collection in an effort to free unused memory.
+```
+## Research
+1. [NodeJs Documentation Reference](https://nodejs.org/api/cli.html)  
+2. [About --max-old-space-size=SIZE in node-options](!https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-mib)
+
+### [Link to article](https://dev.to/sammybarasa/fatal-error-ineffective-mark-compacts-near-heap-limit-allocation-failed-javascript-heap-out-of-memory-on-digital-oceandroplet-4m89/edit)
+</details>
